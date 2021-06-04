@@ -26,4 +26,4 @@ $ git pull demo master （git pull 别名 分支，拉去完成会自动提交�
 -------ssh免密登录---------
 1. C:\Users\wang底下 gitbash here ，接着输入： ssh-keygen -t rsa -C wang@super.com  生成.ssh文件夹，里面有公钥和私钥
 
-2. 然后把公钥复制到gihub上的settings里面的SSH上，这样就可以免密推送和拉取了。
+2. 然后把公钥复制到gihub上的settings里面的SSH上，这样就可以免密推送和拉取了。  git push git@github.com:superwang727/demo.git master (这个ssh貌似也可以起别名)
