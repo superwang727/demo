@@ -1,0 +1,24 @@
+首先登录github新建一个仓库，选择https的地址，就是仓库地址。
+
+1. $ git remote -v    // 查看远程仓库别名。没有就创建一个，这样不用每次推送都写一个长地址：https://github.com/superwang727/demo.git
+
+2 . 创建别名：git remote add demo https://github.com/superwang727/demo.git
+
+查看一下：
+$ git remote -v
+demo    https://github.com/superwang727/demo.git (fetch)   // 为啥有两个：一个拉取一个推送
+demo    https://github.com/superwang727/demo.git (push)
+
+3.推送代码上去
+
+git push demo master（git push 别名 分支） 推送的最小单位是分支
+
+遇到ssl问题，请输入：git config --global http.sslVerify "false"。
+window的凭据管理器里面加上后，这个就可以变成true了，不然又报错了。
+-------------------------------------
+
+4.拉取代码：
+$ git pull demo master （git pull 别名 分支，拉去完成会自动提交）
+
+5.克隆代码
+小号克隆：gitbash here -------> git clone https://xxxxx.git------>add ---->commit--->push
