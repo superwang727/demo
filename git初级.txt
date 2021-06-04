@@ -1,0 +1,168 @@
+
+账号245801806@qq.com
+
+密码：huobiqianbao——q
+
+
+-------------常用的命令-----------------------------------
+	$ git config --global user.name wang
+	$ git config --global user.email xxx@qq.com
+
+
+
+
+
+
+
+
+------------------------学习之路
+
+1. 下载git，一路next
+
+2.新建一个文件夹专门用来作为demo
+3.右键gitbash here 
+
+
+4.必须设置个账号和邮箱，不然提交不了代码。邮箱随便写，不会验证 。
+	$ git config --global user.name wang
+	$ git config --global user.email xxx@qq.com
+
+成功？查看c盘-->用户-->当前用户底下的.gitconfig文件是不是下面这样
+[user]
+name = wang
+email = xxx@qq.com
+
+
+5. 新建个hello.txt,输入一些东西，模拟代码，保存。   git status 查看下当前状态。发现是文件被修改了。
+
+6. git add hello.txt 添加一下，修复一些LF行尾修饰符。 git status 再看下，红色变成绿色了 。  （第6步是把hello.txt放到暂存区里面，暂存区可以被删除的，删掉文件还在，只是会变成红色，恢复成第5步）
+
+
+7.接下来是提交暂存区的数据到本地仓库。git commit -m "这是提交日志" hello.txt 
+$ git commit -m "first commit" hello.txt
+warning: LF will be replaced by CRLF in hello.txt.
+The file will have its original line endings in your working directory
+[master (root-commit) 7ce9e7d] first commit                           // 这个7ce9e7d就是版本号
+ 1 file changed, 14 insertions(+)
+ create mode 100644 hello.txt
+
+再用 git status看下，已经没有文件信息了，已经提交过了
+On branch master
+nothing to commit, working tree clean
+
+
+8. 查看版本信息
+$ git reflog
+7ce9e7d (HEAD -> master) HEAD@{0}: commit (initial): first commit
+
+$ git log
+commit 7ce9e7df6f3faf3832780c7d325d7c208d277728 (HEAD -> master)
+Author: superwang727 <245801806@qq.com>
+Date:   Fri Jun 4 11:36:27 2021 +0800
+
+    first commit
+
+----------------下面模拟第二次提交，比如第二天来更新了hello.txt的步骤
+9. vim hello.txt 新增了xxxx的代码，保存。接着 git status 看下
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+发现变红了，说明文件被修改了。
+
+
+10. 继续git add 提交到暂存区
+
+11. git commit -m "第二次提交日志" hello.txt
+$ git commit -m "second commit" hello.txt
+warning: LF will be replaced by CRLF in hello.txt.
+The file will have its original line endings in your working directory
+[master 82aa5f4] second commit
+ 1 file changed, 1 insertion(+), 1 deletion(-)    // 一个修改，一个删除，git是按行来的
+
+
+12 。再查看下版本信息，已经有两个版本了
+$ git reflog
+82aa5f4 (HEAD -> master) HEAD@{0}: commit: second commit   // 指针指向第二个版本
+7ce9e7d HEAD@{1}: commit (initial): first commit
+
+--------------模拟第三次修改hello.txt
+
+13. vim hello.txt 修改，保存 。  git status 一下，发现又变红了
+
+14. 继续重复，git add hello.txt ------------> git commit -m "第三次提交" hello.txt
+
+15 查看下版本信息
+$ git reflog
+67b7d6a (HEAD -> master) HEAD@{0}: commit: third commit   // 当前指针在第三个版本，查看当前文件就是3333
+82aa5f4 HEAD@{1}: commit: second commit
+7ce9e7d HEAD@{2}: commit (initial): first commit
+
+
+--------------------跳转版本
+
+git rest --hard 82aa5f4       // 版本号
+
+
+
+--------------分支 的 管理--------------------------------
+git branch -v 	 // 查看当前分支的情况
+
+git branch fz222    // 新建一个分支
+
+git checkout fz222  // 切换到fz222分支
+
+git merage fz2222  //合并分支，站在master分支上，把fz2222合并过来
+
+-----------------> 冲突合并，比如：在master分支上修改hello文件，提交。接着切换fz222上修改了hello文件，提交。再切换到master上，合并fz222的数据，会报错：
+$ git merge v
+Auto-merging hellomsi.txt
+CONFLICT (content): Merge conflict in hellomsi.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+wang@DESKTOP-7QAI310 MINGW64 ~/Desktop/git—learn/demo (master|MERGING)   // 此时显示正在合并
+
+这个解决方法是手动修改代码，再合并：
+vim hello.txt---->
+这是笔记本的学习git  fzzzzzvvvvvvvvvvvvvvv		
+这是笔记本的学习git
+这是笔记本的学习git
+这是笔记本的学习git
+这是笔记本的学习git
+这是笔记本的学习git
+<<<<<<< HEAD				// 这是master分支的修改内容
+这是笔记本的学习git  master test
+这是笔记本的学习git
+=======
+这是笔记本的学习git				// 这是v分支的修改内容
+这是笔记本的学习git     v test
+>>>>>>> v
+~
+~
+删掉多余的东西：
+这是笔记本的学习git  fzzzzzvvvvvvvvvvvvvvv
+这是笔记本的学习git
+这是笔记本的学习git
+这是笔记本的学习git
+这是笔记本的学习git
+这是笔记本的学习git
+这是笔记本的学习git  master test
+这是笔记本的学习git     v test
+
+
+保存退出。接着需要保存暂存区，再提交（这里提交不要写文件名）
+$ git commit -m "merge fz"			// 这里不用写文件名
+[master 7050821] merge fz
+
+wang@DESKTOP-7QAI310 MINGW64 ~/Desktop/git—learn/demo (master)
+
+
+
+
+
+
+
